@@ -1,0 +1,45 @@
+{% extends "base.html"%}
+{% block content%}
+<h1 class="text-xl font-semibold text-gray-900">List of Threads!!!</h1>
+
+{% for thread in threads%}
+
+<ul role="list" class="divide-y divide-gray-200">
+  <li class="relative bg-white py-5 px-4 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 hover:bg-gray-50">
+   
+    <div class="px-4 py-4 sm:px-6 lg:px-8">
+      <div class="sm:flex sm:items-center">
+        <div class="sm:flex-auto">
+          <!-- <h1 class="text-xl font-semibold text-gray-900">Boards</h1> -->
+          <!-- <p class="mt-2 text-sm text-gray-700">A list all boards.</p> -->
+        </div>
+
+      </div>
+    <div class="flex justify-between space-x-3">
+      <div class="min-w-0 flex-1">
+        <!-- <a href="{% url 'thread_detail' thread.pk %}">{{ thread.title }}</a> -->
+        <a href="{% url 'thread_detail' thread.id %}">{{ thread.title }}</a>
+        <p class="truncate text-sm text-gray-500">{{ thread.description}}</p>
+      </a>
+      </div>
+    {% if thread.created_by == user %}
+      <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+        <button type="button"
+          class="inline-flex items-center justify-center rounded-md border border-transparent bg-sky-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
+          <a href="{% url 'edit_thread' category.id thread.id %}">edit</a> </button>
+          <a href="{% url 'thread_delete' category.id thread.id  %}">Delete</a></button>
+      </div>
+      {% endif %}
+      <time datetime="2021-01-27T16:35" class="flex-shrink-0 whitespace-nowrap text-sm text-gray-500">1d ago</time>
+    </div>
+  </li>
+</ul>
+
+{%endfor%}
+<div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+  <button type="button"
+    class="inline-flex items-center justify-center rounded-md border border-transparent bg-sky-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
+    <a href="{% url 'create_thread' category.id  %}">Create thread</a></button>
+    
+</div>
+{% endblock %}

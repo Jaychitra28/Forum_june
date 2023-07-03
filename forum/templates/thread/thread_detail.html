@@ -1,0 +1,46 @@
+{% extends "base.html"%}
+{% block content%}
+
+<div class="px-4 py-4 sm:px-6 lg:px-8">
+    <div class="sm:flex sm:items-center">
+        <div class="sm:flex-auto">
+            <h1 class="text-xl font-semibold text-gray-900"> {{ thread.title}}</h1>
+            {{ thread.description}}
+        </div>
+        <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+            <button type="button"
+                class="inline-flex items-center justify-center rounded-md border border-transparent bg-sky-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
+                <a href="{% url 'create_response' thread.id %}">Leave your response here!!</a></button>
+        </div>
+    </div>
+</div>
+<div class="border-t border-gray-200 px-4 py-5 sm:p-0">
+  <h1 class="text-m font-semibold text-gray-900">Response</h1>
+    <dl class="sm:divide-y sm:divide-gray-200">
+        {% for res in response%}
+        <div class="px-4 py-4 sm:px-6 lg:px-8 border-solid">
+            <div class="sm:flex sm:items-center">
+                <div class="sm:flex-auto">
+                  <h1 class="text-m font-semibold text-gray-900">{{ res.created_by.username }} <span
+                    style="color: grey; font-size: small;"></span></h1>
+                 {{ res.message}}
+                </div>
+                {% if res.created_by == user %}
+
+                <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+                    <button type="button"
+                        class="inline-flex items-center justify-center rounded-md border border-transparent bg-sky-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
+                        <a href="{% url 'edit_response' thread.id res.id %}">Edit</a> </button>
+                    </div>
+                    <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none"></div>
+                        <button type="button"
+                        class="inline-flex items-center justify-center rounded-md border border-transparent bg-sky-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
+                        <a href="{% url 'response_delete' thread.id res.id %}">Delete</a> </button>
+                    </div>
+              
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+      
+{% endblock %}
